@@ -24,7 +24,9 @@ class GraphArea extends StatefulWidget {
   State<GraphArea> createState() => _GraphAreaState();
 }
 
-class _GraphAreaState extends State<GraphArea> {
+class _GraphAreaState extends State<GraphArea> with SingleTickerProviderStateMixin{
+  late AnimationController _animationController;
+
   List<DataPoint> data = [
     DataPoint(day: 1, steps: Random().nextInt(100)),
     DataPoint(day: 2, steps: Random().nextInt(100)),
@@ -37,18 +39,41 @@ class _GraphAreaState extends State<GraphArea> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _animationController = 
+        AnimationController(vsync: this, duration: Duration(seconds: 2));
+        _animationController.forward();
+  }
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: GraphPainter(data: data),
+    return GestureDetector(
+      onTap: () {
+        _animationController.forward(from: 0.0);
+      },
+      child: CustomPaint(
+        painter: GraphPainter(_animationController.view, data: data),
+      ),
     );
   }
 }
 
 class GraphPainter extends CustomPainter {
-
   final List<DataPoint> data;
+  final Animation<double> _size;
 
-  GraphPainter({required this.data});
+  GraphPainter(Animation<double> animation, {required this.data}) 
+      : _size = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
+        parent: animation, 
+        curve: Curves.easeInOutCubicEmphasized
+        )),
+      super(repaint: animation);
 
 
   @override
@@ -71,7 +96,7 @@ class GraphPainter extends CustomPainter {
     var cx =0.0;
     for(int i=0;i<data.length;i++){
 
-      var y = size.height -(data[i].steps*yRatio);
+      var y = size.height -(data[i].steps * yRatio * _size.value);
 
       offsets.add(Offset(cx, y));
       cx += xSpacing;
