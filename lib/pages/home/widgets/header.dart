@@ -41,11 +41,11 @@ class AppHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hello',
+                  'Hello,',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w300,
-                    fontSize: 20,
+                    fontSize: 21,
                   ),
                 ),
                 Text(
@@ -53,7 +53,7 @@ class AppHeader extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 26,
+                    fontSize: 27,
                   ),
                 ),
               ],

@@ -20,7 +20,7 @@ class GraphArea extends StatefulWidget {
   const GraphArea({super.key});
 
   @override
-  State<GraphArea> createState() => _GraphAreaState();
+  _GraphAreaState createState() => _GraphAreaState();
 }
 
 class _GraphAreaState extends State<GraphArea>
@@ -168,8 +168,8 @@ class GraphPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
+  bool shouldRepaint(covariant GraphPainter oldDelegate) {
+    return data != oldDelegate.data;
   }
 }
 
