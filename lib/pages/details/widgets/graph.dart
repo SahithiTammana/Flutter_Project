@@ -8,14 +8,13 @@ class Graph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child:SizedBox(
+      child: SizedBox(
         width: double.infinity,
         child: GraphArea(),
       ),
     );
   }
 }
-
 
 class GraphArea extends StatefulWidget {
   const GraphArea({super.key});
@@ -24,7 +23,8 @@ class GraphArea extends StatefulWidget {
   State<GraphArea> createState() => _GraphAreaState();
 }
 
-class _GraphAreaState extends State<GraphArea> with SingleTickerProviderStateMixin{
+class _GraphAreaState extends State<GraphArea>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   List<DataPoint> data = [
@@ -41,10 +41,11 @@ class _GraphAreaState extends State<GraphArea> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _animationController = 
-        AnimationController(vsync: this, duration: Duration(seconds: 2));
-        _animationController.forward();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 2500));
+    _animationController.forward();
   }
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -67,23 +68,30 @@ class _GraphAreaState extends State<GraphArea> with SingleTickerProviderStateMix
 class GraphPainter extends CustomPainter {
   final List<DataPoint> data;
   final Animation<double> _size;
+  final Animation<double> _dotsize;
 
-  GraphPainter(Animation<double> animation, {required this.data}) 
-      : _size = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
-        parent: animation, 
-        curve: Curves.easeInOutCubicEmphasized
-        )),
-      super(repaint: animation);
-
+  GraphPainter(Animation<double> animation, {required this.data})
+      : _size = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+              parent: animation, 
+              curve: Interval(0.0, 0.75, curve: Curves.easeInOutCubicEmphasized),
+          ),
+        ),
+        _dotsize = Tween<double>(begin: 0, end: 1).animate(
+          CurvedAnimation(
+              parent: animation, 
+              curve: Interval(0.55, 1, curve: Curves.easeInOutCubicEmphasized),
+          ),
+        ),
+        super(repaint: animation);
 
   @override
   void paint(Canvas canvas, Size size) {
-  
-    var xSpacing = size.width / (data.length-1);
+    var xSpacing = size.width / (data.length - 1);
 
     var maxSteps = data
-      .fold<DataPoint>(data[0], (p, c) => p.steps > c.steps ? p : c)
-      .steps;
+        .fold<DataPoint>(data[0], (p, c) => p.steps > c.steps ? p : c)
+        .steps;
 
     print(xSpacing);
     print(maxSteps);
@@ -93,47 +101,49 @@ class GraphPainter extends CustomPainter {
 
     List<Offset> offsets = [];
 
-    var cx =0.0;
-    for(int i=0;i<data.length;i++){
-
-      var y = size.height -(data[i].steps * yRatio * _size.value);
+    var cx = 0.0;
+    for (int i = 0; i < data.length; i++) {
+      var y = size.height - (data[i].steps * yRatio * _size.value);
 
       offsets.add(Offset(cx, y));
       cx += xSpacing;
     }
 
-
     Paint linePaint = Paint()
       ..color = Color(0xff30c3f9)
       ..style = PaintingStyle.stroke
-      ..strokeWidth=4.0;
-
+      ..strokeWidth = 4.0;
 
     Paint shadowPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.solid, 3)
-      ..strokeWidth=4.0;  
+      ..strokeWidth = 4.0;
 
     Paint fillPaint = Paint()
       ..shader = ui.Gradient.linear(
-        Offset(size.width / 2,0), 
-        Offset(size.width / 2, size.height), 
-        [
-          Color(0xff30c3f9),
-          Colors.white,
-        ]
-      )
+          Offset(size.width / 2, 0), Offset(size.width / 2, size.height), [
+        Color(0xff30c3f9),
+        Colors.white,
+      ])
       ..color = Colors.blue
-      ..style = PaintingStyle.fill;  
-    
+      ..style = PaintingStyle.fill;
+
+    Paint dotOutlinePaint = Paint()
+      ..color = Colors.white.withAlpha(200)
+      ..strokeWidth = 8;
+
+    Paint dotCentre = Paint()
+      ..color = Color(0xff30c3f9)
+      ..strokeWidth = 8;
+
     Path linePath = Path();
 
     Offset cOffset = offsets[0];
 
-    linePath.moveTo(cOffset.dx,cOffset.dy);
+    linePath.moveTo(cOffset.dx, cOffset.dy);
 
-    for(int i = 1; i < offsets.length; i++){
+    for (int i = 1; i < offsets.length; i++) {
       var x = offsets[i].dx;
       var y = offsets[i].dy;
       var c1x = cOffset.dx + curveOffset;
@@ -141,10 +151,10 @@ class GraphPainter extends CustomPainter {
       var c2x = x - curveOffset;
       var c2y = y;
 
-      linePath.cubicTo(c1x, c1y, c2x, c2y, x ,y);
+      linePath.cubicTo(c1x, c1y, c2x, c2y, x, y);
       cOffset = offsets[i];
     }
-    
+
     Path fillPath = Path.from(linePath);
     fillPath.lineTo(size.width, size.height);
     fillPath.lineTo(0, size.height);
@@ -153,17 +163,17 @@ class GraphPainter extends CustomPainter {
     canvas.drawPath(linePath, shadowPaint);
     canvas.drawPath(linePath, linePaint);
 
+    canvas.drawCircle(offsets[4], 15 * _dotsize.value, dotOutlinePaint);
+    canvas.drawCircle(offsets[4], 8 * _dotsize.value, dotCentre);
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return true;
   }
-
 }
 
-
-class DataPoint{
+class DataPoint {
   final int day;
   final int steps;
 
