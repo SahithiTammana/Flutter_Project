@@ -1,5 +1,5 @@
 import 'dart:math';
-
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 
 class Graph extends StatelessWidget {
@@ -79,9 +79,28 @@ class GraphPainter extends CustomPainter {
 
 
     Paint linePaint = Paint()
-      ..color = Colors.black
+      ..color = Color(0xff30c3f9)
       ..style = PaintingStyle.stroke
-      ..strokeWidth=3.0;
+      ..strokeWidth=4.0;
+
+
+    Paint shadowPaint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..maskFilter = ui.MaskFilter.blur(ui.BlurStyle.solid, 3)
+      ..strokeWidth=4.0;  
+
+    Paint fillPaint = Paint()
+      ..shader = ui.Gradient.linear(
+        Offset(size.width / 2,0), 
+        Offset(size.width / 2, size.height), 
+        [
+          Color(0xff30c3f9),
+          Colors.white,
+        ]
+      )
+      ..color = Colors.blue
+      ..style = PaintingStyle.fill;  
     
     Path linePath = Path();
 
@@ -101,7 +120,12 @@ class GraphPainter extends CustomPainter {
       cOffset = offsets[i];
     }
     
-    
+    Path fillPath = Path.from(linePath);
+    fillPath.lineTo(size.width, size.height);
+    fillPath.lineTo(0, size.height);
+
+    canvas.drawPath(fillPath, fillPaint);
+    canvas.drawPath(linePath, shadowPaint);
     canvas.drawPath(linePath, linePaint);
 
   }
