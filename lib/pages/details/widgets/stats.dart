@@ -30,12 +30,29 @@ class Stats extends StatelessWidget {
           child: Row(
             children: [
               InfoStat(
-                  icon: Icons.timer,
-                  iconColor: Color(0xff535bed),
-                  iconBackground: Color(0xffe4e7ff),
-                  time: '+5s',
-                  label: 'Time',
-                  value: '30:34')
+                icon: Icons.timer,
+                iconColor: Color(0xff535bed),
+                iconBackground: Color(0xffe4e7ff),
+                time: '+5s',
+                label: 'Time',
+                value: '30:34',
+              ),
+              InfoStat(
+                icon: Icons.favorite_outline,
+                iconColor: Color(0xffe11e6c),
+                iconBackground: Color(0xffffe4fb),
+                time: '+5s',
+                label: 'Heart Rate',
+                value: '90 bpm',
+              ),
+              // InfoStat(
+              //   icon: Icons.timer,
+              //   iconColor: Color(0xff535bed),
+              //   iconBackground: Color(0xffe4e7ff),
+              //   time: '+5s',
+              //   label: 'Time',
+              //   value: '30:34',
+              // ),
             ],
           ),
         ),
@@ -69,17 +86,19 @@ class InfoStat extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       margin: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: Color(0xffe1e1e1),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              offset: Offset(3, 3),
-              blurRadius: 3,
-            )
-          ]),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(
+          color: Color(0xffe1e1e1),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            offset: Offset(3, 3),
+            blurRadius: 3,
+          )
+        ],
+      ),
       child: Stack(
         children: [
           StatIcon(
