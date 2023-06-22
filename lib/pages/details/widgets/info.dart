@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/pages/details/widgets/stats.dart';
 
 class Info extends StatelessWidget {
   const Info({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Stats(value: '345',unit: 'kcal',label: 'Calories'),
-        Stats(value: '3.6',unit: 'km',label: 'Distance'),
+        Stats(value: '225',unit: 'kcal',label: 'Calories'),
+        Stats(value: '2.5',unit: 'km',label: 'Distance'),
         Stats(value: '1.5',unit: 'hr',label: 'Hours'),
       ],
     );
@@ -37,15 +36,15 @@ class Stats extends StatelessWidget {
         Text.rich(
           TextSpan(
             text: value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w900,
             ),
             children: [
-              TextSpan(text: ' '),
+              const TextSpan(text: ' '),
               TextSpan(
                   text: unit,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 10, 
                     fontWeight: FontWeight.w500,
                     ),
@@ -53,10 +52,10 @@ class Stats extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 10,
             fontWeight: FontWeight.w500,
           ),

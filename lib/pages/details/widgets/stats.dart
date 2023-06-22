@@ -1,42 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/pages/details/widgets/info.dart';
 
 class Stats extends StatelessWidget {
   const Stats({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        Row(
-          children: [
-            Text(
-              'Workout Stats',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w800,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30),
+          child: Row(
+            children: [
+              Text(
+                'Workout Stats',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
-            ),
-            SizedBox(width: 8),
-            Icon(
-              Icons.pie_chart_rounded,
-              size: 15,
-              color: Color(0xff3bc6fa),
-            ),
-          ],
+              SizedBox(width: 8),
+              Icon(
+                Icons.pie_chart_rounded,
+                size: 15,
+                color: Color(0xff3bc6fa),
+              ),
+            ],
+          ),
         ),
         SizedBox(height: 15),
         SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
           child: Row(
             children: [
+              SizedBox(width: 30),
               InfoStat(
                 icon: Icons.timer,
                 iconColor: Color(0xff535bed),
                 iconBackground: Color(0xffe4e7ff),
                 time: '+5s',
                 label: 'Time',
-                value: '30:34',
+                value: '20:34',
               ),
+              SizedBox(width: 15),
               InfoStat(
                 icon: Icons.favorite_outline,
                 iconColor: Color(0xffe11e6c),
@@ -45,14 +50,16 @@ class Stats extends StatelessWidget {
                 label: 'Heart Rate',
                 value: '90 bpm',
               ),
-              // InfoStat(
-              //   icon: Icons.timer,
-              //   iconColor: Color(0xff535bed),
-              //   iconBackground: Color(0xffe4e7ff),
-              //   time: '+5s',
-              //   label: 'Time',
-              //   value: '30:34',
-              // ),
+              SizedBox(width: 15),
+              InfoStat(
+                icon: Icons.bolt,
+                iconColor: Color(0xffd3b50f),
+                iconBackground: Color(0xfffb4be4),
+                time: '+5s',
+                label: 'Energy',
+                value: '183kcal',
+              ),
+              SizedBox(width: 30),
             ],
           ),
         ),
@@ -89,9 +96,9 @@ class InfoStat extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
-          color: Color(0xffe1e1e1),
+          color: const Color(0xffe1e1e1),
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black12,
             offset: Offset(3, 3),
@@ -114,11 +121,11 @@ class InfoStat extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: TextStyle(fontSize: 10),
+                  style: const TextStyle(fontSize: 10),
                 ),
                 Text(
                   value,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                 ),
               ],
             ),
@@ -149,7 +156,7 @@ class Change extends StatelessWidget {
           ),
           child: Text(
             time,
-            style: TextStyle(fontSize: 10, color: Colors.white),
+            style: const TextStyle(fontSize: 10, color: Colors.white),
           )),
     );
   }

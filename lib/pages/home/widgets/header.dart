@@ -12,20 +12,20 @@ class AppHeader extends StatelessWidget {
         children: [
           CustomPaint(
             painter: HeaderPainter(),
-            size: Size(double.infinity, 200),
+            size: const Size(double.infinity, 200),
           ),
           Positioned(
             top: 20,
             left: 20,
             child: IconButton(
               onPressed: () {},
-              icon: Icon(
+              icon: const Icon(
                 Icons.menu,
                 color: Colors.white,
               ),
             ),
           ),
-          Positioned(
+          const Positioned(
             top: 35,
             right: 40,
             child: CircleAvatar(
@@ -34,7 +34,7 @@ class AppHeader extends StatelessWidget {
               foregroundImage: AssetImage('assets/profile.jpg'),
             ),
           ),
-          Positioned(
+          const Positioned(
             left: 33,
             bottom: 20,
             child: Column(
@@ -68,12 +68,12 @@ class AppHeader extends StatelessWidget {
 class HeaderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint backColor = Paint()..color = Color(0xff18b0e8);
+    Paint backColor = Paint()..color = const Color(0xff18b0e8);
     Paint circles = Paint()..color = Colors.white.withAlpha(40);
 
     canvas.drawRect(
       Rect.fromPoints(
-        Offset(0, 0),
+        const Offset(0, 0),
         Offset(size.width, size.height),
       ),
       backColor,

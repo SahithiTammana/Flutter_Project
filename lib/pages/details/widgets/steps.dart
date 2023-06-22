@@ -14,12 +14,12 @@ class Steps extends StatelessWidget {
         children: [
           Text(
             steps,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 33,
               fontWeight: FontWeight.w900,
             ),
           ),
-          Text(
+          const Text(
             'Total Steps',
             style: TextStyle(
               fontSize: 11,

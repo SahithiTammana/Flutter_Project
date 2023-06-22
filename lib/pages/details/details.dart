@@ -15,13 +15,15 @@ class DetailsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: MainAppBar(appBar: AppBar()),
-      body: Column(
+      body: const Column(
         children: [
           Dates(),
           Steps(),
           Graph(),
           Info(),
+          Divider(height: 30),
           Stats(),
+          SizedBox(height: 30),
           BottomNavigation(),
         ],
       ),

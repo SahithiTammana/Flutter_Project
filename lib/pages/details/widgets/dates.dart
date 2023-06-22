@@ -15,7 +15,7 @@ class Dates extends StatelessWidget {
         date: date,
         active: i == 3,
       ));
-      date = date.add(Duration(days: 1));
+      date = date.add(const Duration(days: 1));
     }
 
     return Padding(
@@ -45,30 +45,30 @@ class DateBox extends StatelessWidget {
       height: 70,
       decoration: BoxDecoration(
         gradient: active
-            ? LinearGradient(colors: [
+            ? const LinearGradient(colors: [
                 Color(0xff92e2ff),
                 Color(0xff1ebdf8),
               ], begin: Alignment.topCenter)
             : null,
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Color(0xffe1e1e1),
+          color: const Color(0xffe1e1e1),
         ),
       ),
       child: DefaultTextStyle.merge(
-        style: active ? TextStyle(color: Colors.white) : null,
+        style: active ? const TextStyle(color: Colors.white) : null,
         child: Column(
           children: [
             Text(
               daysOfWeek[date.weekday]!,
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Text(
               date.day.toString().padLeft(2, '0'),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 27,
                 fontWeight: FontWeight.w500,
               ),
